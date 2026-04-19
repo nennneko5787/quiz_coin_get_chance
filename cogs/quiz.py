@@ -45,7 +45,7 @@ class QuizCog(commands.Cog):
         await ctx.reply("練習を始めます")
         await self.quiz(practice=True)
 
-    @tasks.loop(minutes=10)
+    @tasks.loop(minutes=5)
     async def quizLoop(self):
         await random.choice([self.quiz, self.pokemon, self.pokemon])()
 
