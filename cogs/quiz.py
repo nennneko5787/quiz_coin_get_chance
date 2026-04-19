@@ -141,11 +141,7 @@ class QuizCog(commands.Cog):
         if not channel or not isinstance(channel, discord.TextChannel):
             return
 
-        if not practice:
-            coins = random.randint(1, 500)
-        else:
-            coins = 0
-
+        coins = random.randint(1, 500)
         self.inGame = True
 
         async with channel.typing():
@@ -273,6 +269,8 @@ class QuizCog(commands.Cog):
 
         if winner:
             messageText += f" **:coin: {coins}コインゲット！**"
+            if practice:
+                messageText += " (練習のためゲットできません)"
 
         messageText += "\n\n"
 
@@ -289,7 +287,7 @@ class QuizCog(commands.Cog):
         if winner is None:
             return
 
-        if coins == 0:
+        if practice:
             return
 
         commands = await guild.application_commands()
