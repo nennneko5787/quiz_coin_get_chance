@@ -54,7 +54,7 @@ class MineCog(commands.Cog):
         if self.workCommand:
             await self.workCommand(channel)
 
-    @tasks.loop(seconds=31)
+    @tasks.loop(seconds=35)
     async def mine(self):
         guild = self.bot.get_guild(1491704145608966203)
         if not guild:
