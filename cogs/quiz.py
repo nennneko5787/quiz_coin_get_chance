@@ -130,7 +130,9 @@ class QuizCog(commands.Cog):
                     await command(channel, target=message.author, amount=coins)
                     break
         except asyncio.TimeoutError:
-            pass
+            await questionMessage.reply(
+                f"正解は**{name}**！\n正解者: **なし！**"
+            )
         finally:
             self.inGame = False
 
