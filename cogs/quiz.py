@@ -30,6 +30,7 @@ class QuizCog(commands.Cog):
         )
 
     @commands.command("ポケモン練習")
+    @commands.cooldown(1, 20, commands.BucketType.guild)
     async def pokemonCommand(self, ctx: commands.Context):
         if self.inGame:
             return
@@ -38,6 +39,7 @@ class QuizCog(commands.Cog):
         await self.pokemon(practice=True)
 
     @commands.command("クイズ練習")
+    @commands.cooldown(1, 20, commands.BucketType.guild)
     async def quizCommand(self, ctx: commands.Context, genre: str = ""):
         if self.inGame:
             return
