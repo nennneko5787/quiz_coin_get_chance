@@ -1,4 +1,5 @@
 import asyncio
+import io
 import json
 import os
 import random
@@ -89,8 +90,11 @@ class QuizCog(commands.Cog):
                 if entry["language"]["name"] == "ja-hrkt"
             )
 
+            response = await self.http.get(imageUrl)
+
             questionMessage = await channel.send(
-                f"**問題！**\n\nこのポケモンは何？\n**20秒以内に回答してください**\n**最速正解で{coins}コインゲット**\n{imageUrl}"
+                f"**問題！**\n\nこのポケモンは何？\n**20秒以内に回答してください**\n**最速正解で{coins}コインゲット**",
+                file=discord.File(io.BytesIO(response.content), f"{id}.png"),
             )
 
         def check(message: discord.Message):
