@@ -47,7 +47,7 @@ class QuizCog(commands.Cog):
 
     @tasks.loop(minutes=5)
     async def quizLoop(self):
-        await random.choice([self.quiz, self.pokemon, self.pokemon])()
+        await random.choice([self.quiz, self.pokemon])()
 
     @commands.Cog.listener()
     async def on_ready(self):
