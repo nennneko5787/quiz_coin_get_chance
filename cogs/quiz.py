@@ -38,12 +38,12 @@ class QuizCog(commands.Cog):
         await self.pokemon(practice=True)
 
     @commands.command("クイズ練習")
-    async def quizCommand(self, ctx: commands.Context):
+    async def quizCommand(self, ctx: commands.Context, genre: str = ""):
         if self.inGame:
             return
 
         await ctx.reply("練習を始めます")
-        await self.quiz(practice=True)
+        await self.quiz(practice=True, genre=genre)
 
     @tasks.loop(minutes=5)
     async def quizLoop(self):
@@ -53,7 +53,7 @@ class QuizCog(commands.Cog):
     async def on_ready(self):
         self.quizLoop.start()
 
-    async def pokemon(self, practice: bool = False):
+    async def pokemon(self, *, practice: bool = False):
         channel = self.bot.get_channel(1491704146544300094)
         if not channel or not isinstance(channel, discord.TextChannel):
             return
@@ -136,7 +136,7 @@ class QuizCog(commands.Cog):
         finally:
             self.inGame = False
 
-    async def quiz(self, practice: bool = False):
+    async def quiz(self, *, practice: bool = False, genre: str = ""):
         channel = self.bot.get_channel(1491704146544300094)
         if not channel or not isinstance(channel, discord.TextChannel):
             return
@@ -161,6 +161,7 @@ class QuizCog(commands.Cog):
                         "content": (
                             "適当に◯✕クイズ1問だけ出してください。"
                             f"難しさ指数: {coins} / 500 で問題を作ってください。"
+                            f"ジャンル指定: {genre} (空欄の場合指定はありません。)"
                             "色んなジャンルから問題を出してください。"
                             "日常で使うクイズの他に「ボカロ」「ネットカルチャー」「ツイ廃」「アニメ」「日本史」「世界史」「性癖」「VTuber」など様々なジャンルで出題してください。(ぜひこれ以外のジャンルを出してほしい)"
                             '{"genre":"ジャンル","question":"問題文","answer":true/false,"explanation":"解説"}'
